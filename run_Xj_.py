@@ -1,17 +1,14 @@
 from argparse import ArgumentParser
 import torch
-from models.model import mymodel
 from exp import exp_DWT
 seed = 0
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
 parser = ArgumentParser()
-# parser.add_argument('--model', type=str, default='times', help='model of experiment, options: [timese]')
 parser.add_argument('--data', type=str, default='custom', help='data of experiment, options: [ETTh1, ETTh2, ETTm1, ETTm2]') 
-# parser.add_argument('--root_path', type=str, default='/home/gpuadmin/qihuifile/Time-Series-Library-main/data/ETT/', help='root path of data')
 parser.add_argument('--root_path', type=str, default='./dataset/', help='root path of data')
-parser.add_argument('--data_path', type=str, default='XJ.csv', help='data file')
+parser.add_argument('--data_path', type=str, default='CC-PV.csv', help='data file')
 parser.add_argument('--features', type=str, default='MS', help='features of experiment, options: [M, S, MS]')
 parser.add_argument('--freq', type=str, default='t', help='freq for time features encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly], you can also use more detailed freq like 15min or 3h')
 parser.add_argument('--target', type=str, default='OT', help='target feature in S or MS task')
@@ -49,15 +46,7 @@ if __name__ == '__main__':
     exp = exp_DWT.Exp_model(args)
     settings = f"{args.seq_len}_{args.pred_len}_{args.use_gpu}_{args.data_path}"
     exp.train(settings)
-    # print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(settings))
     exp.test(settings)
-    # exp.my_Model_EXP(settings)
-    # exp.parament_caluate()
-    # wandb.finish()
-    # if args.do_predict:
-    #     print('>>>>>>>predicting : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
-    #     exp.predict(setting, True)
-
     torch.cuda.empty_cache()
 
 
