@@ -44,7 +44,7 @@ parser.add_argument('--d_ff', type=int, default=1024, help='dimension of fcn')
 if __name__ == '__main__':
     args = parser.parse_args()
     exp = exp_DWT.Exp_model(args)
-    settings = f"{args.seq_len}_{args.pred_len}_{args.use_gpu}_{args.data_path}"
+    settings = f"{args.data_path}"
     exp.train(settings)
     exp.test(settings)
     torch.cuda.empty_cache()
